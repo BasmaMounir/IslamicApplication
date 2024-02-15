@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic_app/Home/Hadith/hadithTab.dart';
 import 'package:islamic_app/Home/Quran/quranTab.dart';
 import 'package:islamic_app/Home/Radio/radioTab.dart';
 import 'package:islamic_app/Home/Sebha/sebhaTab.dart';
+import 'package:islamic_app/Home/settings/SettingsTab.dart';
 import 'package:islamic_app/my_theme.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -28,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Scaffold(
           appBar: AppBar(
             title: Text(
-              'إسلامي',
+              AppLocalizations.of(context)!.app_title,
               style: Theme.of(context).textTheme.titleLarge,
             ),
           ),
@@ -45,17 +47,20 @@ class _HomeScreenState extends State<HomeScreen> {
               items: [
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/images/radio_icon.png')),
-                    label: 'راديو'),
+                    label: AppLocalizations.of(context)!.radio),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/images/sebha_icon.png')),
-                    label: 'سبحة'),
+                    label: AppLocalizations.of(context)!.sebha),
                 BottomNavigationBarItem(
                     icon:
                         ImageIcon(AssetImage('assets/images/hadith_icon.png')),
-                    label: 'حديث'),
+                    label: AppLocalizations.of(context)!.hadith),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/images/quran_icon.png')),
-                    label: 'قرآن'),
+                    label: AppLocalizations.of(context)!.quran),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.settings),
+                    label: AppLocalizations.of(context)!.settings),
               ],
             ),
           ),
@@ -70,5 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
     SebhaTab(),
     HadithTab(),
     QuranTab(),
+    SettingsTab()
   ];
 }
