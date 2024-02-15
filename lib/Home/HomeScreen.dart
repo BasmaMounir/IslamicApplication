@@ -6,6 +6,8 @@ import 'package:islamic_app/Home/Radio/radioTab.dart';
 import 'package:islamic_app/Home/Sebha/sebhaTab.dart';
 import 'package:islamic_app/Home/settings/SettingsTab.dart';
 import 'package:islamic_app/my_theme.dart';
+import 'package:islamic_app/providers/AppConfigProvider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'Home';
@@ -19,10 +21,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Stack(
       children: [
         Image.asset(
-          'assets/images/main_background.png',
+          provider.isDarkMode()
+              ? 'assets/images/main_background_dark.png'
+              : 'assets/images/main_background.png',
           width: double.infinity,
           height: double.infinity,
           fit: BoxFit.fill,
@@ -31,13 +36,20 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: Text(
               AppLocalizations.of(context)!.app_title,
-              style: Theme.of(context).textTheme.titleLarge,
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  color: provider.isDarkMode()
+                      ? Colors.white
+                      : myTheme.blackColor),
             ),
           ),
           bottomNavigationBar: Theme(
-            data: Theme.of(context).copyWith(
-              canvasColor: myTheme.primaryColor,
-            ),
+            data: provider.isDarkMode()
+                ? Theme.of(context).copyWith(
+                    canvasColor: myTheme.primaryDark,
+                  )
+                : Theme.of(context).copyWith(
+                    canvasColor: myTheme.primaryColor,
+                  ),
             child: BottomNavigationBar(
               currentIndex: selectedIndex,
               onTap: (indx) {
@@ -53,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: AppLocalizations.of(context)!.sebha),
                 BottomNavigationBarItem(
                     icon:
-                        ImageIcon(AssetImage('assets/images/hadith_icon.png')),
+                    ImageIcon(AssetImage('assets/images/hadith_icon.png')),
                     label: AppLocalizations.of(context)!.hadith),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/images/quran_icon.png')),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islamic_app/Home/Hadith/ItemHadithDetails.dart';
 import 'package:islamic_app/my_theme.dart';
+import 'package:islamic_app/providers/AppConfigProvider.dart';
+import 'package:provider/provider.dart';
 
 class HadithDetails extends StatefulWidget {
   static const String routeName = 'HadithDetails';
@@ -15,13 +17,16 @@ class _HadithDetailsState extends State<HadithDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     var args = ModalRoute.of(context)?.settings.arguments as HadihDetailsArgs;
     if (Hadith.isEmpty) {
       loadFiles(args.indx);
     }
     return Stack(children: [
       Image.asset(
-        'assets/images/main_background.png',
+        provider.isDarkMode()
+            ? 'assets/images/main_background_dark.png'
+            : 'assets/images/main_background.png',
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.fill,
@@ -35,39 +40,39 @@ class _HadithDetailsState extends State<HadithDetails> {
           ),
           body: Hadith.isEmpty
               ? Center(
-                  child: CircularProgressIndicator(
-                  color: myTheme.primaryColor,
+              child: CircularProgressIndicator(
+                  color: provider.isDarkMode()
+                      ? myTheme.yellowColor
+                      : myTheme.primaryColor,
                 ))
               : Container(
-                  alignment: Alignment.center,
+            alignment: Alignment.center,
                   padding: EdgeInsets.all(5),
                   margin: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * 0.06,
                     horizontal: MediaQuery.of(context).size.width * 0.05,
                   ),
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(-10, -10),
-                            blurRadius: 5)
-                      ],
                       borderRadius: BorderRadius.circular(25),
-                      color: Colors.white),
+                      color: provider.isDarkMode()
+                          ? myTheme.primaryDark
+                          : Colors.white),
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return Divider(
-                        color: myTheme.primaryColor,
+                        color: provider.isDarkMode()
+                            ? myTheme.yellowColor
+                            : myTheme.primaryColor,
                       );
                     },
                     itemBuilder: (context, index) {
                       return ItemHadithDetails(
                         hadith: Hadith[index],
-                      );
-                    },
-                    itemCount: Hadith.length,
-                  ),
-                ))
+                );
+              },
+              itemCount: Hadith.length,
+            ),
+          ))
     ]);
   }
 

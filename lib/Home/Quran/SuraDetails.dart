@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:islamic_app/Home/Quran/ItemSuraDetails.dart';
 import 'package:islamic_app/my_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/AppConfigProvider.dart';
 
 class SuraDetails extends StatefulWidget {
   static const String routeName = 'SuraDetails';
@@ -15,13 +18,17 @@ class _SuraDetailsState extends State<SuraDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
+
     var args = ModalRoute.of(context)?.settings.arguments as SuraDetailsArgs;
     if (Verses.isEmpty) {
       loadFiles(args.indx);
     }
     return Stack(children: [
       Image.asset(
-        'assets/images/main_background.png',
+        provider.isDarkMode()
+            ? 'assets/images/main_background_dark.png'
+            : 'assets/images/main_background.png',
         width: double.infinity,
         height: double.infinity,
         fit: BoxFit.fill,
@@ -35,40 +42,40 @@ class _SuraDetailsState extends State<SuraDetails> {
           ),
           body: Verses.isEmpty
               ? Center(
-                  child: CircularProgressIndicator(
-                  color: myTheme.primaryColor,
+              child: CircularProgressIndicator(
+                  color: provider.isDarkMode()
+                      ? myTheme.yellowColor
+                      : myTheme.primaryColor,
                 ))
               : Container(
-                  alignment: Alignment.center,
+            alignment: Alignment.center,
                   padding: EdgeInsets.all(5),
                   margin: EdgeInsets.symmetric(
                     vertical: MediaQuery.of(context).size.height * 0.06,
                     horizontal: MediaQuery.of(context).size.width * 0.05,
                   ),
                   decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.grey,
-                            offset: Offset(-10, -10),
-                            blurRadius: 5)
-                      ],
                       borderRadius: BorderRadius.circular(25),
-                      color: Colors.white),
+                      color: provider.isDarkMode()
+                          ? myTheme.primaryDark
+                          : Colors.white),
                   child: ListView.separated(
                     separatorBuilder: (context, index) {
                       return Divider(
-                        color: myTheme.primaryColor,
+                        color: provider.isDarkMode()
+                            ? myTheme.yellowColor
+                            : myTheme.primaryColor,
                       );
                     },
                     itemBuilder: (context, index) {
                       return ItemSuraDetails(
-                        verse: Verses[index],
-                        indx: index,
-                      );
-                    },
-                    itemCount: Verses.length,
-                  ),
-                ))
+                  verse: Verses[index],
+                  indx: index,
+                );
+              },
+              itemCount: Verses.length,
+            ),
+          ))
     ]);
   }
 

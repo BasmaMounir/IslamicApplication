@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:islamic_app/Home/Hadith/ItemHadithName.dart';
 import 'package:islamic_app/my_theme.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/AppConfigProvider.dart';
 
 class HadithTab extends StatelessWidget {
   List<int> hadithNumber = [
@@ -59,11 +62,15 @@ class HadithTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
+
     return Column(
       children: [
         Center(child: Image.asset('assets/images/hadith_logo.png')),
         Divider(
-          color: myTheme.primaryColor,
+          color: provider.isDarkMode()
+              ? myTheme.yellowColor
+              : myTheme.primaryColor,
           thickness: 3,
         ),
         Text(

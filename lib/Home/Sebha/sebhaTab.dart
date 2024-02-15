@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:islamic_app/Home/Sebha/TextItem.dart';
+import 'package:islamic_app/providers/AppConfigProvider.dart';
+import 'package:provider/provider.dart';
 
 class SebhaTab extends StatefulWidget {
   @override
@@ -25,21 +27,24 @@ class _SebhaTabState extends State<SebhaTab> {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Stack(alignment: Alignment.topCenter, children: [
             Container(
-                margin: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.0009),
-                child: Image.asset('assets/images/head of seb7a.png')),
+                margin: EdgeInsets.only(top: 5),
+                child: provider.isDarkMode()
+                    ? Image.asset('assets/images/head of seb7a_dark.png')
+                    : Image.asset('assets/images/head of seb7a.png')),
             Container(
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.09),
+              margin: EdgeInsets.only(top: 80),
               child: Transform.rotate(
                   angle: rotationAngle * (3.14 / 180),
-                  child: Image.asset('assets/images/body of seb7a.png')),
+                  child: provider.isDarkMode()
+                      ? Image.asset('assets/images/body of seb7a_dark.png')
+                      : Image.asset('assets/images/body of seb7a.png')),
             )
           ]),
           Padding(
