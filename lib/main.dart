@@ -31,6 +31,8 @@ class MyApp extends StatelessWidget {
         HadithDetails.routeName: (context) => HadithDetails(),
       },
       theme: myTheme.lightTheme,
+      themeMode: provider.mode,
+      darkTheme: myTheme.darkTheme,
       locale: Locale('${provider.appLanguage}'),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

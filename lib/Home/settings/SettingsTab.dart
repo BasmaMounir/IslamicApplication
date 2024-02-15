@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:islamic_app/Home/settings/ThemeBottomSheet.dart';
 import 'package:islamic_app/Home/settings/showLanguageBottomSheet.dart';
 import 'package:islamic_app/my_theme.dart';
 import 'package:islamic_app/providers/AppConfigProvider.dart';
@@ -30,7 +31,9 @@ class _SettingsTabState extends State<SettingsTab> {
             margin: EdgeInsets.all(15),
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
-                color: myTheme.primaryColor,
+                color: provider.isDarkMode()
+                    ? myTheme.yellowColor
+                    : myTheme.primaryColor,
                 borderRadius: BorderRadius.circular(25)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +51,43 @@ class _SettingsTabState extends State<SettingsTab> {
               ],
             ),
           ),
-        )
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Text(
+          AppLocalizations.of(context)!.theme,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        InkWell(
+          onTap: () {
+            showThemeBottomSheet();
+          },
+          child: Container(
+            margin: EdgeInsets.all(15),
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                color: provider.isDarkMode()
+                    ? myTheme.yellowColor
+                    : myTheme.primaryColor,
+                borderRadius: BorderRadius.circular(25)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  provider.isDarkMode()
+                      ? AppLocalizations.of(context)!.dark
+                      : AppLocalizations.of(context)!.light,
+                  style: TextStyle(color: Colors.white),
+                ),
+                Icon(
+                  Icons.arrow_drop_down,
+                  color: Colors.white,
+                )
+              ],
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -58,6 +97,14 @@ class _SettingsTabState extends State<SettingsTab> {
         context: context,
         builder: (context) {
           return LanguageBottomSheet();
+        });
+  }
+
+  void showThemeBottomSheet() {
+    showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return ThemeBottomSheet();
         });
   }
 }
