@@ -19,8 +19,9 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-              onTap: () {
-                return provider.ChangeLanguage('en');
+              onTap: () async {
+                await provider.ChangeLanguage('en');
+                Navigator.pop(context);
               },
               child: provider.appLanguage == 'en'
                   ? selectedItem(AppLocalizations.of(context)!.english)
@@ -29,8 +30,9 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
             height: 20,
           ),
           InkWell(
-            onTap: () {
-              return provider.ChangeLanguage('ar');
+            onTap: () async {
+              await provider.ChangeLanguage('ar');
+              Navigator.pop(context);
             },
             child: provider.appLanguage == 'ar'
                 ? selectedItem(AppLocalizations.of(context)!.arabic)

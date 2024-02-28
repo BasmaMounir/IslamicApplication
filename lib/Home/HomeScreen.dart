@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:islamic_app/Home/Hadith/hadithTab.dart';
 import 'package:islamic_app/Home/Quran/quranTab.dart';
 import 'package:islamic_app/Home/Radio/radioTab.dart';
@@ -36,7 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
           appBar: AppBar(
             title: Text(
               AppLocalizations.of(context)!.app_title,
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              style: GoogleFonts.lato(
+                  fontSize: 40,
                   color: provider.isDarkMode()
                       ? Colors.white
                       : myTheme.blackColor),
@@ -65,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: AppLocalizations.of(context)!.sebha),
                 BottomNavigationBarItem(
                     icon:
-                    ImageIcon(AssetImage('assets/images/hadith_icon.png')),
+                        ImageIcon(AssetImage('assets/images/hadith_icon.png')),
                     label: AppLocalizations.of(context)!.hadith),
                 BottomNavigationBarItem(
                     icon: ImageIcon(AssetImage('assets/images/quran_icon.png')),

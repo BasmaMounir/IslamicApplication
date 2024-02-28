@@ -22,8 +22,9 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           InkWell(
-              onTap: () {
-                return provider.ChangeThemeMode(ThemeMode.light);
+              onTap: () async {
+                await provider.ChangeThemeMode(ThemeMode.light);
+                Navigator.pop(context);
               },
               child: provider.isDarkMode()
                   ? unselectedItem(AppLocalizations.of(context)!.light)
@@ -32,8 +33,9 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
             height: 20,
           ),
           InkWell(
-            onTap: () {
-              return provider.ChangeThemeMode(ThemeMode.dark);
+            onTap: () async {
+              await provider.ChangeThemeMode(ThemeMode.dark);
+              Navigator.pop(context);
             },
             child: provider.isDarkMode()
                 ? selectedItem(AppLocalizations.of(context)!.dark)
