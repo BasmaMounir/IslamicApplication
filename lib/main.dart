@@ -12,7 +12,7 @@ void main() {
   runApp(ChangeNotifierProvider(
     child: MyApp(),
     create: (context) {
-      return AppConfigProvider();
+      return AppConfigProvider()..loadSettingData();
     },
   ));
 }
